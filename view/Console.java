@@ -1,12 +1,22 @@
 package view;
 
+import java.util.Scanner;
+
 public class Console {
-  final char sub = 'S';
-  final char trans = 'T';
+  final String sub = "S";
+  final String trans = "T";
+  final String encrypt = "E";
+  final String decrypt = "D";
+  Scanner userInput = new Scanner(System.in, "utf-8");
 
   public static enum StartMessage {
     Sub,
     Trans
+  }
+
+  public static enum EncryptOrDecypt {
+    Encrypt,
+    Decrypt
   }
 
   /**
@@ -14,8 +24,31 @@ public class Console {
    */
   public void displayStartMessage() {
     System.out.println("|| Welcome to this encryption app. ||");
-    System.out.println("|| Press " + sub + " for creating a substituttion cipher ||");
+    System.out.println("|| Press " + sub + " for creating a substitution cipher ||");
     System.out.println("|| Press " + trans + " for creating a transposition cipher ||");
+  }
+
+  public String getFileName() {
+    System.out.println("|| Please enter name of file you wish to encrypt/decrypt ||");
+    String fileName = userInput.nextLine();
+    return fileName;
+  }
+
+  public String getKey() {
+    System.out.println("|| Please enter a key ||");
+    String key = userInput.nextLine();
+    return key;
+  }
+
+  public EncryptOrDecypt getInput() {
+    System.out.println("|| Do you want to encrypt " + encrypt + " or decrypt " + decrypt + " ? ||");
+    String input = userInput.nextLine();
+    if(input.equals(encrypt)) {
+      return EncryptOrDecypt.Encrypt;
+    } else if(input.equals(decrypt)) {
+      return EncryptOrDecypt.Decrypt;
+    }
+    return null;
   }
 
   /**
@@ -24,30 +57,12 @@ public class Console {
    * @return User choice enum.
    */
   public StartMessage getAction() {
-    int input = getInput();
-    if(input == sub) {
+    String input = userInput.nextLine();
+    if(input.equals(sub)) {
       return StartMessage.Sub;
-    } else if(input == trans) {
+    } else if(input.equals(trans)) {
       return StartMessage.Trans;
     }
     return null;
-  }
-
-  /**
-   * Returns pressed characters from the keyboard.
-
-   * @return the pressed character.
-   */
-  public int getInput() {
-    try {
-      int c = System.in.read();
-      while (c == '\r' || c == '\n') {
-        c = System.in.read();
-      }
-      return c;
-    } catch (java.io.IOException e) {
-      System.out.println("" + e);
-      return 0;
-    }
   }
 }
