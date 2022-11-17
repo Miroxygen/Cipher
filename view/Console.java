@@ -9,14 +9,29 @@ public class Console {
     Trans
   }
 
+  /**
+   * Displays a welcome message.
+   */
   public void displayStartMessage() {
     System.out.println("|| Welcome to this encryption app. ||");
     System.out.println("|| Press " + sub + " for creating a substituttion cipher ||");
     System.out.println("|| Press " + trans + " for creating a transposition cipher ||");
   }
 
-
-  
+  /**
+   * Get action from user.
+   *
+   * @return User choice enum.
+   */
+  public StartMessage getAction() {
+    int input = getInput();
+    if(input == sub) {
+      return StartMessage.Sub;
+    } else if(input == trans) {
+      return StartMessage.Trans;
+    }
+    return null;
+  }
 
   /**
    * Returns pressed characters from the keyboard.
